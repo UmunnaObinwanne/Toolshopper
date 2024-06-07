@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "./../../ReduxToolkits/Redux-features/AllProductsFeatures/FetchProductsSlice";
 import ProductPageUI from "./ProductPageUI";
+import Loader from "../../Reuseable-Components/Loader";
+import PromotionalBanner from "../../Reuseable-Components/PromotionalBanners/PromotionalBanner";
 
 function FullProductsPage() {
   const dispatch = useDispatch();
@@ -16,7 +18,11 @@ function FullProductsPage() {
   }, [dispatch, status]);
 
   if (status === "loading") {
-    return <div>Loading Products...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
   }
 
   if (status === "failed") {
@@ -24,16 +30,20 @@ function FullProductsPage() {
   }
 
   return (
-    <div className="py-8">
-      <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-8">
-        Products
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductPageUI key={product.id} product={product} />
-        ))}
+    <>
+      <PromotionalBanner />
+      <div className="py-8">
+        <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-8">
+          Products
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductPageUI key={product.id} product={product} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

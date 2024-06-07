@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryProducts } from "../../ReduxToolkits/Redux-features/CategoriesFeatures/FetchSingleCategorySlice";
 import SingleCategoryPageUI from "./SingleCategoryPageUI";
+import Loader from "../../Reuseable-Components/Loader";
 
 const SingleCategoryPage = () => {
   const { category } = useParams();
@@ -16,7 +17,11 @@ const SingleCategoryPage = () => {
   }, [dispatch, category]);
 
   if (status === "loading") {
-    return <div>Loading products...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
   }
 
   if (status === "failed") {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../ReduxToolkits/Redux-features/CategoriesFeatures/FetchAllCategorySlice";
 import { useEffect } from "react";
 import AllCategoryProductPageUI from "./AllCategoryProductPageUI";
+import Loader from "../../Reuseable-Components/Loader";
 
 function AllCategoryPage() {
   const dispatch = useDispatch();
@@ -18,8 +19,12 @@ function AllCategoryPage() {
     }
   }, [categoriesStatus, dispatch]);
 
-  if (categoriesStatus === "loading") {
-    return <div>Loading categories...</div>;
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
   }
 
   if (categoriesStatus === "failed") {
@@ -28,7 +33,7 @@ function AllCategoryPage() {
 
   return (
     <div className="my-10">
-      <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-8">
+      <h2 className="m-5 text-4xl font-extrabold px-6 py-6 text-center mb-8 bg-gradient-to-tr from-blue-700 to-purple-400 text-white">
         Categories
       </h2>
       <div className="flex flex-wrap justify-center">

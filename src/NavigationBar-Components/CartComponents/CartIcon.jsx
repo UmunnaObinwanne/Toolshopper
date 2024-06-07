@@ -1,4 +1,12 @@
-function CartIcon() {
+import { useSelector } from "react-redux";
+
+function CartIcon({ item }) {
+  const AllCartItems = useSelector((state) => state.cart.cartItems);
+
+  const itemQuantity = AllCartItems.reduce((total, item) => {
+    return total + item.quantity;
+  }, 0);
+
   return (
     <div>
       <span className="relative">
@@ -15,7 +23,7 @@ function CartIcon() {
           ></path>
         </svg>
         <span className="absolute left-auto -ml-1 -top-1 rounded-full bg-red-500 px-1 py-0 text-xs text-white">
-          4
+          {itemQuantity}
         </span>
       </span>
     </div>

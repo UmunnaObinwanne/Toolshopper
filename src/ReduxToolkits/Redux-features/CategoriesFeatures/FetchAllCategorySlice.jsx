@@ -11,9 +11,9 @@ export const fetchCategories = createAsyncThunk(
         throw new Error("Failed to fetch categories");
       }
       const data = await response.json();
-      console.log(data);
+
       const categories = Array.from(new Set(data));
-      console.log("Categories:", categories);
+
       return categories;
     } catch (error) {
       console.error("Error fetching categories:", error.message);

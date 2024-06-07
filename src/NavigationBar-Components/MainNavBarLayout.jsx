@@ -10,6 +10,7 @@ import LogoImage from "../Reuseable-Components/Components-for-Navigation/LogoIma
 import LoginButton from "./Login-and-UserDropdown/Login-Button";
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 
 function MainNavBarLayout() {
   const [isShow, setIsShow] = useState(false);
@@ -41,7 +42,9 @@ function MainNavBarLayout() {
 
           <div className="flex items-center ml-auto space-x-8">
             <WishlistIcon />
-            <CartIcon />
+            <Link to="/cart/overview">
+              <CartIcon />
+            </Link>
             {user ? (
               <UserDropdown
                 className="cursor-pointer fill-[#000] hover:fill-[#007bff] inline-block"

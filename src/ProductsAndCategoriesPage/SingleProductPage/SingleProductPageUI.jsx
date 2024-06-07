@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AddToCartButton from "../../Reuseable-Components/AddToCartButton/AddToCartButton";
 
 function SingleProductPageUI({ product }) {
   const [selectedTab, setSelectedTab] = useState("description");
@@ -131,12 +132,7 @@ function SingleProductPageUI({ product }) {
               >
                 Buy now
               </button>
-              <button
-                type="button"
-                className="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded"
-              >
-                Add to cart
-              </button>
+              <AddToCartButton product={product} />
             </div>
           </div>
         </div>

@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryProducts } from "../../ReduxToolkits/Redux-features/CategoriesFeatures/FetchSingleCategorySlice";
-import SingleCategoryPageUI from "./SingleCategoryPageUI";
+//import SingleCategoryPageUI from "./SingleCategoryPageUI";
 import Loader from "../../Reuseable-Components/Loader";
+import ProductPageUI from "../AllProductsPages/ProductPageUI";
 
 const SingleCategoryPage = () => {
   const { category } = useParams();
@@ -45,7 +46,7 @@ const SingleCategoryPage = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <SingleCategoryPageUI key={product.id} product={product} />
+          <ProductPageUI key={product.id} product={product} />
         ))}
       </div>
     </div>

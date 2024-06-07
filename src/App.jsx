@@ -7,6 +7,7 @@ import FullProductsPage from "./ProductsAndCategoriesPage/AllProductsPages/FullP
 import SingleProductPage from "./ProductsAndCategoriesPage/SingleProductPage/SingleProductPage";
 import { useSelector } from "react-redux";
 import Loader from "./Reuseable-Components/Loader";
+import CartOverview from "./CartComponents/CartOverview";
 
 function App() {
   const categoriesStatus = useSelector((state) => state.categories.status);
@@ -32,6 +33,7 @@ function App() {
           <Route path="/category/:category" element={<SingleCategoryPage />} />
           <Route path="/products" element={<FullProductsPage />} />
           <Route path="/product/:productId" element={<SingleProductPage />} />
+          <Route path="/cart/overview" element={<CartOverview />} />
         </Route>
       </Routes>
     </>

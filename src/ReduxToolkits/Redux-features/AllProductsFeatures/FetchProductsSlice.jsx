@@ -12,7 +12,6 @@ export const fetchProducts = createAsyncThunk(
       const data = await response.json();
 
       const products = data;
-      console.log(products);
       return products;
     } catch (error) {
       console.error("Error fetching categories:", error.message);

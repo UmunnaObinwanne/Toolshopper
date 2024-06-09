@@ -1,19 +1,32 @@
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 import { addProductToCart } from "../../ReduxToolkits/Redux-features/CartFeatures/CartSlice";
 
 function AddToCartButton({ product }) {
   const dispatch = useDispatch();
 
-  function handleAddToCart() {
-    dispatch(addProductToCart(product));
-  }
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleAddToCart = () => {
+    setIsAdding(true);
+    // Simulate a network request or some async operation
+    setTimeout(() => {
+      setIsAdding(false);
+      dispatch(addProductToCart(product));
+      console.log(`Added ${product.id} to cart`);
+    }, 1000);
+  };
 
   return (
-    <button
+    <motion.button
       onClick={handleAddToCart}
       type="button"
       className="w-full flex items-center justify-center gap-3 mt-6 px-6 py-3 bg-yellow-400 text-base text-gray-800 font-semibold rounded-xl"
+      whileTap={{ scale: 0.9 }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: isAdding ? 0.5 : 1 }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,8 +39,8 @@ function AddToCartButton({ product }) {
           data-original="#000000"
         ></path>
       </svg>
-      Add to cart
-    </button>
+      {isAdding ? "Adding..." : "Add to cart"}
+    </motion.button>
   );
 }
 

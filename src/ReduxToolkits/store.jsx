@@ -4,6 +4,7 @@ import categoryProductsReducer from "./Redux-features/CategoriesFeatures/FetchSi
 import allProductsReducer from "./Redux-features/AllProductsFeatures/FetchProductsSlice";
 import singleProductReducer from "./Redux-features/AllProductsFeatures/FetchIndividualProductSlice";
 import cartReducer from "./Redux-features/CartFeatures/CartSlice";
+import authReducer from "./Redux-features/FirebaseAuthFeatures/AuthSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     allProducts: allProductsReducer,
     singleProduct: singleProductReducer,
     cart: cartReducer,
+    auth: authReducer,
     // Add other reducers here if any
   },
 });

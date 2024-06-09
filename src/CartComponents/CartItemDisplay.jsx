@@ -26,6 +26,7 @@ function CartItemDisplay({ item }) {
     dispatch(updateProductQuantity({ id, quantity: quantity + 1 }));
   }
 
+  const totalSingleProductPrice = item.price * item.quantity;
   return (
     <div>
       <div className="flex gap-4 bg-white p-4 rounded shadow-[0_2px_12px_-3px_rgba(6,81,237,0.3)]">
@@ -119,7 +120,7 @@ function CartItemDisplay({ item }) {
             </svg>
           </div>
           <h3 className="sm:text-lg text-base font-bold text-gray-800 mt-auto">
-            {item.price}
+            {totalSingleProductPrice}
           </h3>
         </div>
       </div>

@@ -8,6 +8,9 @@ import SingleProductPage from "./ProductsAndCategoriesPage/SingleProductPage/Sin
 import { useSelector } from "react-redux";
 import Loader from "./Reuseable-Components/Loader";
 import CartOverview from "./CartComponents/CartOverview";
+import Checkout from "./CheckoutComponents/Checkout";
+import LoginForm from "./LoginAndLogoutComponents/LoginComponents/LoginForm";
+import SignUpForm from "./LoginAndLogoutComponents/SignUpComponents/SignUpForm";
 
 function App() {
   const categoriesStatus = useSelector((state) => state.categories.status);
@@ -34,7 +37,10 @@ function App() {
           <Route path="/products" element={<FullProductsPage />} />
           <Route path="/product/:productId" element={<SingleProductPage />} />
           <Route path="/cart/overview" element={<CartOverview />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
       </Routes>
     </>
   );

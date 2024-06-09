@@ -15,8 +15,6 @@ const categoryImages = {
 function AllCategoryProductPageUI({ category }) {
   const imageUrl =
     categoryImages[category] || "https://via.placeholder.com/300?text=No+Image";
-
-  console.log(category);
   return (
     <>
       <Link to={`/category/${category}`}>

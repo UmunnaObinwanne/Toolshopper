@@ -28,16 +28,12 @@ function WishlistDesignComponent({ item }) {
       </div>
       <div className="p-4">
         <img
-          src="https://readymadeui.com/images/coffee1.webp"
+          src={item.image}
           alt="Product 1"
           className="h-48 w-full object-cover"
         />
-        <h3 className="mt-2 text-lg font-bold text-gray-800">
-          Espresso Elegante
-        </h3>
-        <h4 className="mt-2 text-lg text-gray-800 font-bold">
-          $10 <span className="ml-2 text-gray-400 line-through">$15</span>
-        </h4>
+        <h3 className="mt-2 text-lg font-bold text-gray-800">{item.title}</h3>
+        <h4 className="mt-2 text-lg text-gray-800 font-bold">{item.price}</h4>
       </div>
       <div className="flex justify-end p-4">
         <button

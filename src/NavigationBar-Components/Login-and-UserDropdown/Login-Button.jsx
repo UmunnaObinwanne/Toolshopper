@@ -1,10 +1,12 @@
 import { Button } from "@rewind-ui/core";
 
-function LoginButton({ onClick }) {
+import { Link } from "react-router-dom";
+
+function LoginButton() {
   return (
-    <Button shadow="base" onClick={onClick}>
-      Sign in
-    </Button>
+    <Link to="/login">
+      <Button shadow="base">Sign in</Button>
+    </Link>
   );
 }
 

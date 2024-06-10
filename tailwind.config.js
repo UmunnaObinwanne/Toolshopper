@@ -6,7 +6,11 @@ export default {
      './node_modules/@rewind-ui/core/dist/theme/styles/*.js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customBlue: '#94bbe9',
+      },
+    },
   },
   plugins: [
         require('@tailwindcss/typography'),

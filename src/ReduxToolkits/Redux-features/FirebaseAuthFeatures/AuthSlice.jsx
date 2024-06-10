@@ -1,12 +1,15 @@
-// AuthSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-import { auth, db } from "../../../FirebaseConfigurations/firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../FirebaseConfigurations/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore"; // Import Firestore methods
+import { db } from "../../../FirebaseConfigurations/firebaseConfig"; // Import Firestore instance
 
+// Sign In Thunk
 export const signInUser = createAsyncThunk(
   "auth/signInUser",
   async ({ email, password }, { rejectWithValue }) => {
@@ -16,17 +19,30 @@ export const signInUser = createAsyncThunk(
         email,
         password
       );
-      console.log(userCredential.user);
-      return userCredential.user;
+      const user = userCredential.user;
+      console.log(user);
+
+      // Extract only the necessary properties
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      };
+
+      return userData;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+// Sign Up Thunk
 export const signUpUser = createAsyncThunk(
   "auth/signUpUser",
-  async ({ email, password, fullName }, { rejectWithValue }) => {
+  async (
+    { username, email, password, firstName, lastName },
+    { rejectWithValue }
+  ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -35,19 +51,44 @@ export const signUpUser = createAsyncThunk(
       );
       const user = userCredential.user;
 
+      await updateProfile(user, { displayName: username });
+      console.log("User profile updated");
+
       // Store additional user information in Firestore
       await setDoc(doc(db, "users", user.uid), {
-        fullName,
+        firstName,
         email,
+        lastName,
       });
+      console.log("User document set in Firestore");
 
-      return user;
+      // Extract only the necessary properties
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      };
+
+      return userData;
+    } catch (error) {
+      console.error("Error during sign up:", error.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const signOutUser = createAsyncThunk(
+  "auth/signOutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      await signOut(auth);
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+// Auth Slice
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -87,9 +128,19 @@ const authSlice = createSlice({
       .addCase(signUpUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(signOutUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signOutUser.fulfilled, (state) => {
+        state.status = "succeeded";
+        state.user = null;
+      })
+      .addCase(signOutUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });
 
-export const { signOut } = authSlice.actions;
 export default authSlice.reducer;

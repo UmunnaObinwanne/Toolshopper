@@ -2,17 +2,43 @@ import {
   removeProductFromCart,
   updateProductQuantity,
 } from "../ReduxToolkits/Redux-features/CartFeatures/CartSlice";
-import { useDispatch } from "react-redux";
+import {
+  addProductToWishlist,
+  removeProductFromWishlist,
+} from "../ReduxToolkits/WishlistFeatures/WishlistSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 function CartItemDisplay({ item }) {
   const dispatch = useDispatch();
+  const wishlist = useSelector((state) => state.wishlist.wishlistItems);
 
-  //removing Product from scratch
-  function handleRemove(id) {
+  const [added, setAdded] = useState(false);
+
+  useEffect(() => {
+    const isProductInWishlist = wishlist.find(
+      (product) => product.id === item.id
+    );
+    setAdded(isProductInWishlist ? true : false);
+  }, [wishlist]);
+
+  const handleToggleWishlist = () => {
+    if (added) {
+      dispatch(removeProductFromWishlist(item));
+      console.log(`Product ${item.id} is removed from wishlist`);
+    } else {
+      dispatch(addProductToWishlist(item));
+      console.log(`Product ${item.id} is added to wishlist`);
+    }
+    setAdded(!added);
+  };
+
+  // Removing Product from cart
+  function handleRemoveFromCart(id) {
     dispatch(removeProductFromCart({ id }));
   }
 
-  //decreasing Quantity
+  // Decreasing Quantity
   function handleDecrease(id, quantity) {
     if (quantity > 1) {
       dispatch(updateProductQuantity({ id, quantity: quantity - 1 }));
@@ -21,7 +47,7 @@ function CartItemDisplay({ item }) {
     }
   }
 
-  //handlingIncrease
+  // Handling Increase
   function handleIncrease(id, quantity) {
     dispatch(updateProductQuantity({ id, quantity: quantity + 1 }));
   }
@@ -92,19 +118,28 @@ function CartItemDisplay({ item }) {
 
         <div className="ml-auto flex flex-col">
           <div className="flex items-start gap-4 justify-end">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 cursor-pointer fill-gray-400 inline-block"
-              viewBox="0 0 64 64"
+            <div
+              className={`w-6 h-6 flex items-center justify-center rounded-full cursor-pointer ${
+                added ? "bg-red-500" : "bg-gray-100"
+              }`}
+              onClick={handleToggleWishlist}
             >
-              <path
-                d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
-                data-original="#000000"
-              ></path>
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`w-4 cursor-pointer inline-block ${
+                  added ? "fill-white" : "fill-gray-400"
+                }`}
+                viewBox="0 0 64 64"
+              >
+                <path
+                  d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
+                  data-original="#000000"
+                ></path>
+              </svg>
+            </div>
 
             <svg
-              onClick={() => handleRemove(item.id)}
+              onClick={() => handleRemoveFromCart(item.id)}
               xmlns="http://www.w3.org/2000/svg"
               className="w-4 cursor-pointer fill-gray-400 inline-block"
               viewBox="0 0 24 24"

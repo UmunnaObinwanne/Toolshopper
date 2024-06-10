@@ -1,0 +1,24 @@
+/* Breadcrumbs.css */
+.breadcrumb {
+  background: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: " / ";
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: #6c757d;
+}

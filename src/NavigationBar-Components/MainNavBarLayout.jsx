@@ -1,5 +1,4 @@
 import CartIcon from "./CartComponents/CartIcon";
-import UserDropdown from "./Login-and-UserDropdown/UserDropdown";
 import { useState } from "react";
 import WishlistIcon from "./WishlistComponents/WishlistIcon";
 import HamburgerButton from "../Reuseable-Components/Components-for-Navigation/HamburgerButton";
@@ -7,22 +6,18 @@ import NavSearchBar from "../Reuseable-Components/Components-for-Navigation/NavS
 import CloseButton from "../Reuseable-Components/Components-for-Navigation/CloseButton";
 import MenuLinks from "./Menu-Links/MenuLinks";
 import LogoImage from "../Reuseable-Components/Components-for-Navigation/LogoImage";
-import LoginButton from "./Login-and-UserDropdown/Login-Button";
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
+import LoginAndUserLayout from "./Login-and-UserDropdown/LoginAndUserLayout";
 
 function MainNavBarLayout() {
   const [isShow, setIsShow] = useState(false);
-  const [user, setUser] = useState(false);
 
   function handleShow() {
     setIsShow(!isShow);
   }
 
-  function handleSignin() {
-    setUser(!user);
-  }
   return (
     <div>
       <header className="border-b bg-white font-sans min-h-[60px] px-10 py-3 relative tracking-wide relative z-50">
@@ -45,19 +40,13 @@ function MainNavBarLayout() {
             <Link to="/cart/overview">
               <CartIcon />
             </Link>
-            {user ? (
-              <UserDropdown
-                className="cursor-pointer fill-[#000] hover:fill-[#007bff] inline-block"
-                width="20px"
-              />
-            ) : (
-              <LoginButton onClick={handleSignin} className="p-1" />
-            )}
+            <LoginAndUserLayout />
             <HamburgerButton onClick={handleShow} />
           </div>
         </div>
         <NavSearchBar />
       </header>
+
       <Outlet />
       <Footer />
     </div>

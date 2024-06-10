@@ -11,6 +11,10 @@ function CartOverview() {
     navigate(-1); // This navigates back to the previous page
   };
 
+  const handleCheckout = () => {
+    navigate("/checkout", { state: { from: location.pathname } });
+  };
+
   const combinedCartItems = useSelector((state) => state.cart.cartItems);
 
   const totalProductsPrice = combinedCartItems.reduce((total, item) => {
@@ -36,30 +40,33 @@ function CartOverview() {
             <ul className="text-gray-800 space-y-4">
               <li className="flex flex-wrap gap-4 text-sm">
                 Subtotal
-                <span className="ml-auto font-bold">{totalProductsPrice}</span>
+                <span className="ml-auto font-bold">
+                  {totalProductsPrice.toFixed(2)}
+                </span>
               </li>
               <li className="flex flex-wrap gap-4 text-sm">
-                Shipping{" "}
+                Shipping
                 <span className="ml-auto font-bold">{shippingFee}</span>
               </li>
               <li className="flex flex-wrap gap-4 text-sm">
-                Tax <span className="ml-auto font-bold">{tax}</span>
+                Tax <span className="ml-auto font-bold">{tax.toFixed(2)}</span>
               </li>
               <hr className="border-gray-300" />
               <li className="flex flex-wrap gap-4 text-sm font-bold">
-                Total <span className="ml-auto">{totalPayablePrice}</span>
+                Total{" "}
+                <span className="ml-auto">{totalPayablePrice.toFixed(2)}</span>
               </li>
             </ul>
 
             <div className="mt-8 space-y-2">
-              <Link to="/checkout">
-                <button
-                  type="button"
-                  className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded"
-                >
-                  Buy Now
-                </button>
-              </Link>
+              <button
+                onClick={handleCheckout}
+                type="button"
+                className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded"
+              >
+                Buy Now
+              </button>
+
               <button
                 type="button"
                 className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded"

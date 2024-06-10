@@ -11,6 +11,9 @@ import CartOverview from "./CartComponents/CartOverview";
 import Checkout from "./CheckoutComponents/Checkout";
 import LoginForm from "./LoginAndLogoutComponents/LoginComponents/LoginForm";
 import SignUpForm from "./LoginAndLogoutComponents/SignUpComponents/SignUpForm";
+import ProtectedRoute from "./ProtectedRoutesComponents/ProtectedRoute";
+
+import WishlistOverview from "./WishlistComponents/WishlistOverview";
 
 function App() {
   const categoriesStatus = useSelector((state) => state.categories.status);
@@ -28,7 +31,7 @@ function App() {
   }
 
   return (
-    <>
+    <div>
       <Routes>
         <Route path="/" element={<MainNavBarLayout />}>
           <Route index element={<FrontpageLayout />} />
@@ -37,12 +40,15 @@ function App() {
           <Route path="/products" element={<FullProductsPage />} />
           <Route path="/product/:productId" element={<SingleProductPage />} />
           <Route path="/cart/overview" element={<CartOverview />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/wishlist" element={<WishlistOverview />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
         </Route>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

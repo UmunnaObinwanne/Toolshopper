@@ -34,7 +34,6 @@ function SignUpForm() {
     dispatch(signUpUser(formValues)).then((result) => {
       if (signUpUser.fulfilled.match(result)) {
         setIsErrorMessage(false);
-        console.log("sign up successful:", result.payload);
         navigate("/");
       } else {
         setIsErrorMessage(true);
@@ -45,15 +44,6 @@ function SignUpForm() {
           setErrorMessage("Password should be at least 6 characters");
           console.log(errorMessage);
         }
-        /*
-     switch (result.payload.error) {
-          case "Firebase: Error  (auth/weak-password).":
-            setErrorMessage("Password should be at least 6 characters");
-            console.log(errorMessage);
-            break;
-          default:
-        }
-   */
       }
     });
   };

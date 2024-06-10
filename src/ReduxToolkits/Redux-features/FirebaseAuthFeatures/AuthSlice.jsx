@@ -20,7 +20,6 @@ export const signInUser = createAsyncThunk(
         password
       );
       const user = userCredential.user;
-      console.log(user);
 
       // Extract only the necessary properties
       const userData = {
@@ -52,7 +51,6 @@ export const signUpUser = createAsyncThunk(
       const user = userCredential.user;
 
       await updateProfile(user, { displayName: username });
-      console.log("User profile updated");
 
       // Store additional user information in Firestore
       await setDoc(doc(db, "users", user.uid), {
@@ -60,7 +58,6 @@ export const signUpUser = createAsyncThunk(
         email,
         lastName,
       });
-      console.log("User document set in Firestore");
 
       // Extract only the necessary properties
       const userData = {

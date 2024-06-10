@@ -32,7 +32,6 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formValues);
     dispatch(
       signInUser({ email: formValues.email, password: formValues.password })
     ).then((result) => {
@@ -41,7 +40,6 @@ function LoginForm() {
         navigate(from);
       } else {
         setIsErrorMessage(true);
-        console.log(result.payload);
         if (result.payload === "Firebase: Error (auth/invalid-credential).") {
           setErrorMessage("email or password is invalid");
           console.log(errorMessage);
